@@ -1,14 +1,14 @@
 # Airflow
 
 ##Ubuntu
-1. Instalacija Ubuntu: 
+#1. Instalacija Ubuntu: 
 -	Win key + R 
 -	u „Pokreni“ prozoru upišemo optionalfeatures.exe
 -	U „Uključivanju i isključivanju značajki sustava Windows“ pronađemo i uključimo „Podsustav Windows za Linux“ („Windows Subsystems for Linux“)
 -	Kliknemo OK
 -	 Instaliramo Ubuntu sa Windows Store-a ili sa browsera
 -	Ponovno pokrenemo računalo
-2. Instalacija Apache Airflowa u Ubuntu CLI
+##2. Instalacija Apache Airflowa u Ubuntu CLI
 -	U Ubuntu CLI okruženju unesemo komandu „Sudo apt-get install software-properties-common“ koja nam omogućuje da instaliramo paket „software-properties-common“ za upravljanje repozitorija softvera kao i dodavanjem novih repozitorija
 -	Unosimo komandu za dodavanje repozitorija universe, „Sudo apt-add-repository universe“
 -	Te ažuriramo pakete repozitorija sa komandom – „Sudo apt-get update“
@@ -21,17 +21,17 @@
 -	Nakon postavljenog DAG direktorija i DAG skripte unutar direktorija možemo ugasiti webserver, ponovno inicijalizirati bazu podataka sa naredbom „airflow db init“ i naredbom „airflow webserver“ naš DAG bi trebao biti vidljiv na Airflow UI-u koji se nalazi na localhost/8080
 ##Konfiguracija S3 bucketa
 
-1. Napravite S3 bucket:
+#1. Napravite S3 bucket:
 -	Idite na AWS upravljačku konzolu i idite na S3.
 -	Kliknite na "Create bucket" i navedite jedinstveni naziv za svoju kantu.
 -	Ostale opcije ostavite kao zadane i stvorite kantu.
 
 
-2. Stvorite AWS pristupne ključeve:
+#2. Stvorite AWS pristupne ključeve:
 -	U AWS konzoli za upravljanje idite na sigurnosne ključeve vašeg korisnika.
 -	Pod "Pristupni ključevi", kliknite na "Stvori novi pristupni ključ" i zabilježite ID pristupnog ključa i tajni pristupni ključ.
 
-3. Postavite vezu na Airflow-u:
+#3. Postavite vezu na Airflow-u:
 -	Otvorite Airflow UI i idite na Administrator -> Veze.
 -	Kliknite na gumb "+" za stvaranje nove veze.
 -	Postavite ID veze na „s3_conn“.
