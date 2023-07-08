@@ -19,17 +19,17 @@
 -	Nakon postavljenog DAG direktorija i DAG skripte unutar direktorija možemo ugasiti webserver, ponovno inicijalizirati bazu podataka sa naredbom „airflow db init“ i naredbom „airflow webserver“ naš DAG bi trebao biti vidljiv na Airflow UI-u koji se nalazi na localhost/8080
  # Konfiguracija S3 bucketa
 
-#1. Napravite S3 bucket:
+1. Napravite S3 bucket:
 -	Idite na AWS upravljačku konzolu i idite na S3.
 -	Kliknite na "Create bucket" i navedite jedinstveni naziv za svoju kantu.
 -	Ostale opcije ostavite kao zadane i stvorite kantu.
 
 
-#2. Stvorite AWS pristupne ključeve:
+2. Stvorite AWS pristupne ključeve:
 -	U AWS konzoli za upravljanje idite na sigurnosne ključeve vašeg korisnika.
 -	Pod "Pristupni ključevi", kliknite na "Stvori novi pristupni ključ" i zabilježite ID pristupnog ključa i tajni pristupni ključ.
 
-#3. Postavite vezu na Airflow-u:
+3. Postavite vezu na Airflow-u:
 -	Otvorite Airflow UI i idite na Administrator -> Veze.
 -	Kliknite na gumb "+" za stvaranje nove veze.
 -	Postavite ID veze na „s3_conn“.
