@@ -1,14 +1,12 @@
-# Airflow
-
-##Ubuntu
-#1. Instalacija Ubuntu: 
+# Ubuntu
+1. Instalacija Ubuntu: 
 -	Win key + R 
 -	u „Pokreni“ prozoru upišemo optionalfeatures.exe
 -	U „Uključivanju i isključivanju značajki sustava Windows“ pronađemo i uključimo „Podsustav Windows za Linux“ („Windows Subsystems for Linux“)
 -	Kliknemo OK
 -	 Instaliramo Ubuntu sa Windows Store-a ili sa browsera
 -	Ponovno pokrenemo računalo
-##2. Instalacija Apache Airflowa u Ubuntu CLI
+2. Instalacija Apache Airflowa u Ubuntu CLI
 -	U Ubuntu CLI okruženju unesemo komandu „Sudo apt-get install software-properties-common“ koja nam omogućuje da instaliramo paket „software-properties-common“ za upravljanje repozitorija softvera kao i dodavanjem novih repozitorija
 -	Unosimo komandu za dodavanje repozitorija universe, „Sudo apt-add-repository universe“
 -	Te ažuriramo pakete repozitorija sa komandom – „Sudo apt-get update“
@@ -19,7 +17,7 @@
 -	Za kreiranje administratora za Airflow koristimo sljedeću naredbu „airflow users create \ --username admin \ --password xxxx \ --firstname admin \ --lastname admin \ --role Admin \ --email xxx@email.com“
 -	Putem naredbe „cd airflow“ i nakon naredbe „nano airflow.cfg“ možete postaviti željenu DAG mapu pod imenom dags_folder = „putanja dag direktorija“, ili je ostavite kakva je pa u taj direktorij postaviti svoje DAG python skripe
 -	Nakon postavljenog DAG direktorija i DAG skripte unutar direktorija možemo ugasiti webserver, ponovno inicijalizirati bazu podataka sa naredbom „airflow db init“ i naredbom „airflow webserver“ naš DAG bi trebao biti vidljiv na Airflow UI-u koji se nalazi na localhost/8080
-##Konfiguracija S3 bucketa
+ # Konfiguracija S3 bucketa
 
 #1. Napravite S3 bucket:
 -	Idite na AWS upravljačku konzolu i idite na S3.
@@ -40,7 +38,7 @@
 
 
 
-## Objašnjenje DAG skripte
+# Objašnjenje DAG skripte
 Uvoz potrebnih modula: Uvezeni su potrebni Python moduli kao što su datetime, DAG, PythonOperator, S3Hook, pandas i matplotlib.pyplot.
 
 upload_to_s3 Funkcija: Ova funkcija upravlja učitavanjem datoteka u Amazon S3 spremnik. Koristi klasu S3Hook za uspostavljanje veze i učitava datoteke navedene u popisu putova datoteka s odgovarajućim ključevima S3 s popisa ključeva.
