@@ -1,4 +1,4 @@
-# Ubuntu
+##Ubuntu
 1. Instalacija Ubuntu: 
 -	Win key + R 
 -	u „Pokreni“ prozoru upišemo optionalfeatures.exe
@@ -17,7 +17,13 @@
 -	Za kreiranje administratora za Airflow koristimo sljedeću naredbu „airflow users create \ --username admin \ --password xxxx \ --firstname admin \ --lastname admin \ --role Admin \ --email xxx@email.com“
 -	Putem naredbe „cd airflow“ i nakon naredbe „nano airflow.cfg“ možete postaviti željenu DAG mapu pod imenom dags_folder = „putanja dag direktorija“, ili je ostavite kakva je pa u taj direktorij postaviti svoje DAG python skripe
 -	Nakon postavljenog DAG direktorija i DAG skripte unutar direktorija možemo ugasiti webserver, ponovno inicijalizirati bazu podataka sa naredbom „airflow db init“ i naredbom „airflow webserver“ naš DAG bi trebao biti vidljiv na Airflow UI-u koji se nalazi na localhost/8080
- # Konfiguracija S3 bucketa
+3. Kreiranje i pokretanje skripte DAGA u Ubuntu CLI
+- Alternativa postavljanju skripte unutar DAG direktorija bi bila kreiranje python skripte unutar Ubuntu CLI-a.
+- Putem naredbe „cd airflow“ stižemo u airflow direktorij gdje bi se trebao nalaziti DAG direktorij. Ako se ne nalazi unutar airflow direktorija možemo ga kreirati naredbom „mkdir DAG“. 
+- Unutar DAG direktorija kreiramo python skriptu „vim <naziv_skripte.py> i zatim uređujemo našu python skriptu unutar Ubuntu CLI-a, prije toga trebamo pritisnuti tipku „I“ za uređivanje skripte.
+- Nakon što smo je uredili pritisnemo esc tipku i upižemo „:wq“ kako bi izašli i spremili promjene
+- Sada pokrenemo naš airflow webserver i u novom Ubuntu terminalu navigiramo do DAG direktorija gdje se nalazi naša python DAG skripta i unesemo naredbu „Airflow test tasks <id_daga> <task_uploada> i naš DAG se pokreće
+##Konfiguracija S3 bucketa
 
 1. Napravite S3 bucket:
 -	Idite na AWS upravljačku konzolu i idite na S3.
@@ -38,13 +44,15 @@
 
 
 
-# Objašnjenje DAG skripte
-- Uvoz potrebnih modula: Uvezeni su potrebni Python moduli kao što su datetime, DAG, PythonOperator, S3Hook, pandas i matplotlib.pyplot.
+## Objašnjenje DAG skripte
+Uvoz potrebnih modula: Uvezeni su potrebni Python moduli kao što su datetime, DAG, PythonOperator, S3Hook, pandas i matplotlib.pyplot.
 
-- upload_to_s3 Funkcija: Ova funkcija upravlja učitavanjem datoteka u Amazon S3 spremnik. Koristi klasu S3Hook za uspostavljanje veze i učitava datoteke navedene u popisu putanje datoteke s odgovarajućim ključevima S3 s popisa ključeva.
+upload_to_s3 Funkcija: Ova funkcija upravlja učitavanjem datoteka u Amazon S3 spremnik. Koristi klasu S3Hook za uspostavljanje veze i učitava datoteke navedene u popisu putova datoteka s odgovarajućim ključevima S3 s popisa ključeva.
 
-- analiza Funkcija: Ova funkcija izvodi analizu skupa podataka glazbene ankete. Čita skup podataka s navedene lokacije datoteke, grupira podatke prema omiljenom žanru, izračunava prosjek i standardnu devijaciju i generira vizualizacije putem grafikona pomoću matplotlib.pyplot.
+analiza Funkcija: Ova funkcija izvodi analizu skupa podataka glazbene ankete. Čita skup podataka s navedene lokacije datoteke, grupira podatke prema omiljenom žanru, izračunava srednje rezultate i rezultate standardne devijacije i generira vizualizacije trakastog grafikona pomoću matplotlib.pyplot.
 
-- Konfiguracija DAG-a: DAG se stvara pomoću klase DAG, navodeći ID DAG-a, interval rasporeda i datum početka. 
+Konfiguracija DAG-a: DAG se stvara pomoću klase DAG, navodeći ID DAG-a, interval rasporeda i datum početka.
 
-- Definicija DAG procesa: Proces task_upload_to_s3 definiran je kao PythonOperator koji poziva funkciju upload_to_s3 s navedenim argumentima.
+Definicija zadatka: Zadatak task_upload_to_s3 definiran je kao PythonOperator koji poziva funkciju upload_to_s3 s navedenim argumentima.
+
+
