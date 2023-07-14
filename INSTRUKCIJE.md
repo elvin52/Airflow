@@ -23,6 +23,7 @@
 - Unutar DAG direktorija kreiramo python skriptu „vim <naziv_skripte.py> i zatim uređujemo našu python skriptu unutar Ubuntu CLI-a, prije toga trebamo pritisnuti tipku „I“ za uređivanje skripte.
 - Nakon što smo je uredili pritisnemo esc tipku i upižemo „:wq“ kako bi izašli i spremili promjene
 - Sada pokrenemo naš airflow webserver i u novom Ubuntu terminalu navigiramo do DAG direktorija gdje se nalazi naša python DAG skripta i unesemo naredbu „Airflow test tasks <id_daga> <task_uploada> i naš DAG se pokreće
+- Pripazite u pisanju koda na ispravljanje putanje datoteka da budu prilagođene za Linux sustave. Recimo umjesto C:/put_do_datoteke treba pisati /mnt/c/put_do_datoteke. 
 ## Konfiguracija S3 bucketa
 
 1. Napravite S3 bucket:
