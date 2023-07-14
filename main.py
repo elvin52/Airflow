@@ -4,7 +4,16 @@ from airflow.operators.python import PythonOperator
 from airflow.hooks.S3_hook import S3Hook
 import pandas as pd
 import matplotlib.pyplot as plt
+import psycopg2
 
+baza = psycopg2.connect(
+    host="localhost",
+    port="5432",
+    database="analiza",
+    user="elvin",
+    password="elvin"
+)
+cursor = baza.cursor()
 def upload_to_s3(filepaths: list ,keys: list, bucket_name: str) -> None:
     try:
          hook = S3Hook('s3_conn')
@@ -16,46 +25,54 @@ def upload_to_s3(filepaths: list ,keys: list, bucket_name: str) -> None:
 def analiza():
     music = pd.read_csv('D:/Users/elvin/Downloads/archive/mxmh_survey_results.csv')
 
+    music = music[[  # 'Timestamp',
+        'Age',
+        # 'Primary streaming service',
+        'Hours per day',
+        # 'While working', 'Instrumentalist', 'Composer',
+        'Fav genre',
+        # 'Exploratory', 'Foreign languages', 'BPM', 'Frequency [Classical]',
+        # 'Frequency [Country]', 'Frequency [EDM]', 'Frequency [Folk]',
+        # 'Frequency [Gospel]', 'Frequency [Hip hop]', 'Frequency [Jazz]',
+        # 'Frequency [K pop]', 'Frequency [Latin]', 'Frequency [Lofi]',
+        # 'Frequency [Metal]', 'Frequency [Pop]', 'Frequency [R&B]',
+        # 'Frequency [Rap]', 'Frequency [Rock]', 'Frequency [Video game music]',
+        'Anxiety', 'Depression', 'Insomnia', 'OCD', 'Music effects',
+        # 'Permissions'
+    ]].copy()
+
     zanr = music.groupby('Fav genre')
+
+    bins = [0, 25, 40, 60, float('inf')]
+    labels = ['0-25', '25-40', '40-60', '60+']
+
+    music['Dob'] = music['Age'] = pd.cut(music['Age'], bins=bins, labels=labels, right=False)
+    age_genre_counts = music.groupby('Dob')['Fav genre'].value_counts().groupby(level=0).nlargest(1)
+
+    print(age_genre_counts)
 
     anks = zanr['Music effects'].value_counts()
 
-    prosjek_najvecih = zanr[['Anxiety', 'Depression', 'Insomnia', 'OCD']].mean()
-
-    std_najvecih = zanr[['Anxiety', 'Depression', 'Insomnia', 'OCD']].std()
+    prosjek_std = zanr[['Anxiety', 'Depression', 'Insomnia', 'OCD']].agg(['mean', 'std'])
 
     bolje = zanr['Music effects'].value_counts()
 
-    prosjek_najvecih.to_csv('D:/Users/elvin/Downloads/archive/prosjek.csv', index=False)
-
-    std_najvecih.to_csv('D:/Users/elvin/Downloads/archive/std.csv', index=False)
-
+    prosjek_std.to_csv('D:/Users/elvin/Downloads/archive/prosjek.csv', index=False)
     bolje.to_csv('D:/Users/elvin/Downloads/archive/efekt_muzike.csv', index=False)
-
-    prosjek_najvecih.plot(kind='bar', figsize=(10, 6))
-    plt.title('Mean Scores by Genre')
-    plt.xlabel('Genre')
-    plt.ylabel('Mean Score')
-    plt.xticks(rotation=45)
-    plt.savefig('prosjek.png')
-    plt.show()
-
-
-    std_najvecih.plot(kind='bar', figsize=(10, 6))
-    plt.title('Standard Deviation of Scores by Genre')
-    plt.xlabel('Genre')
-    plt.ylabel('Standard Deviation')
-    plt.xticks(rotation=45)
-    plt.savefig('std.png')
-    plt.show()
 
     bolje.plot(kind='bar', figsize=(10, 6))
     plt.title('Efekti muzike na mentalno stanje po žanru')
-    plt.xlabel('Genre')
+    plt.xlabel('Žanr')
     plt.ylabel('Efekti muzike')
     plt.xticks(rotation=45)
+    plt.subplots_adjust(bottom=0.35)
     plt.savefig('efekti.png')
     plt.show()
+
+    prosjek_std.plot(kind='bar', figsize=(15, 5))
+    plt.show()
+
+
 
 with DAG(
     dag_id='s3_dag',
@@ -70,17 +87,15 @@ with DAG(
         op_kwargs={
             'filepaths': [
                 'D:/Users/elvin/Downloads/archive/prosjek.csv',
-                'D:/Users/elvin/Downloads/archive/std.csv',
                 'D:/Users/elvin/Downloads/archive/efekt_muzike.csv'
             ],
             'keys': [
                 'top50MusicFrom2010-2019/prosjek.csv',
-                'top50MusicFrom2010-2019/std.csv',
                 'top50MusicFrom2010-2019/efekt_muzike.csv'
             ],
             'bucket_name': 'mojipodaci'
         }
     )
-
+    
 
 analiza()
