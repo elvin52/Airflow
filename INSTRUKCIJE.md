@@ -46,14 +46,14 @@
 
 
 ## Objašnjenje DAG skripte
-Uvoz potrebnih modula: Uvezeni su potrebni Python moduli kao što su datetime, DAG, PythonOperator, S3Hook, pandas i matplotlib.pyplot.
+- Uvoz potrebnih modula: Uvezeni su potrebni Python moduli kao što su datetime, DAG, PythonOperator, S3Hook, pandas i matplotlib.pyplot.
 
-upload_to_s3 Funkcija: Ova funkcija upravlja učitavanjem datoteka u Amazon S3 spremnik. Koristi klasu S3Hook za uspostavljanje veze i učitava datoteke navedene u popisu putova datoteka s odgovarajućim ključevima S3 s popisa ključeva.
+- upload_to_s3 Funkcija: Ova funkcija upravlja učitavanjem datoteka u Amazon S3 spremnik. Koristi klasu S3Hook za uspostavljanje veze i učitava datoteke navedene u popisu putova datoteka s odgovarajućim ključevima S3 s popisa ključeva.
 
-analiza Funkcija: Ova funkcija izvodi analizu skupa podataka glazbene ankete. Čita skup podataka s navedene lokacije datoteke, grupira podatke prema omiljenom žanru, izračunava srednje rezultate i rezultate standardne devijacije i generira vizualizacije trakastog grafikona pomoću matplotlib.pyplot.
+-analiza Funkcija: Ova funkcija izvodi analizu skupa podataka glazbene ankete. Čita skup podataka s navedene lokacije datoteke, grupira podatke prema omiljenom žanru, izračunava srednje rezultate i rezultate standardne devijacije i generira vizualizacije trakastog grafikona pomoću matplotlib.pyplot.
 
-Konfiguracija DAG-a: DAG se stvara pomoću klase DAG, navodeći ID DAG-a, interval rasporeda i datum početka.
+-Konfiguracija DAG-a: DAG se stvara pomoću klase DAG, navodeći ID DAG-a, interval rasporeda i datum početka.
 
-Definicija zadatka: Zadatak task_upload_to_s3 definiran je kao PythonOperator koji poziva funkciju upload_to_s3 s navedenim argumentima.
+-Definicija zadatka: Zadatak task_upload_to_s3 definiran je kao PythonOperator koji poziva funkciju upload_to_s3 s navedenim argumentima.
 
 
