@@ -38,17 +38,20 @@ def analiza():
     ]].copy()
 
     # dataframeovi koji sluze kao tablice za bazu
-    
+    #Kreiranje tablice "user" i primarnog ključa te tablice
     music['participant_id'] = music.index
     user = music[['participant_id', 'Age', 'Fav genre']]
 
+    #Kreiranje tablice "user" i primarne i vanjske ključeve tih tablica
     mental = music[['Anxiety', 'Depression', 'Insomnia', 'OCD', 'Music effects']]
 
-    
     mental['mental_id'] = mental.index
     mental['participant_id']=mental['mental_id']
-    
 
+    #Spremanje tablica u bazu podataka
+    user.to_sql('Users', engine)
+    mental.to_sql('Mental_states', engine)
+    
     zanr = music.groupby('Fav genre')
 
     bins = [0, 25, 40, 60, float('inf')]
@@ -59,9 +62,6 @@ def analiza():
 
 
     prosjek_std = zanr[['Anxiety', 'Depression', 'Insomnia', 'OCD']].agg(['mean', 'std'])
-
-    user.to_sql('Users', engine)
-    mental.to_sql('Mental_states', engine)
 
     bolje = zanr['Music effects'].value_counts()
 
