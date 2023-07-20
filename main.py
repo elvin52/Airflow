@@ -96,6 +96,10 @@ with DAG(
             'bucket_name': 'mojipodaci'
         }
     )
-    
+    task_analiza = PythonOperator(
+        task_id='analiza',
+        python_callable=analiza
+    )
+    task_analiza>>task_upload_to_s3
 
 analiza()
