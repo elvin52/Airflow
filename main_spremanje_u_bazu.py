@@ -38,12 +38,16 @@ def analiza():
     ]].copy()
 
     # dataframeovi koji sluze kao tablice za bazu
-
+    
     music['participant_id'] = music.index
     user = music[['participant_id', 'Age', 'Fav genre']]
 
     mental = music[['Anxiety', 'Depression', 'Insomnia', 'OCD', 'Music effects']]
+
+    
     mental['mental_id'] = mental.index
+    mental['participant_id']=mental['mental_id']
+    
 
     zanr = music.groupby('Fav genre')
 
